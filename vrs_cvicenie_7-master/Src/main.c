@@ -119,7 +119,7 @@ int main(void) {
 
 		uint16_t get_buff = DMA_buffer_size();
 		float buff_prtg = (float) (get_buff) / (float) (DMA_USART2_BUFFER_SIZE)*100;
-		sprintf(dat_, "Buffer capacity: %d bytes, occupied memory: %d bytes, load [in %]:%.1f%%\r\n", DMA_USART2_BUFFER_SIZE, get_buff, buff_prtg);
+		sprintf(dat_, "Buffer capacity: %d bytes, occupied memory: %d bytes, load : %.1f%%\r\n", DMA_USART2_BUFFER_SIZE, get_buff, buff_prtg);
 
 		USART2_PutBuffer((uint8_t *) dat_, sizeof(dat_));
 		LL_mDelay(1000);
