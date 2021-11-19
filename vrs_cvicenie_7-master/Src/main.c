@@ -200,7 +200,48 @@ void receive_dma_data(const uint8_t *data, uint16_t len) {
 		}
 		index_P = strlen(buff) + 1;
 
-	} 
+	} else if (state_) {
+
+		for (uint8_t i = 0; i < RX_len; i++) {
+
+			if (*(data + i) == '$') {
+				for (uint8_t j = 0; j < i + index_P; j++) {
+					if (isupper(buff[j])) {
+						velke++;
+						if (velke >= 255) {
+							velke = 0;
+						}
+					} else if (islower(buff[j])) {
+						male++;
+						if (male >= 255) {
+							male = 0;
+						}
+					}
+
+				}
+				memset(buff, '\0', BUFF_LEN);
+				state_ = 0;
+			}
+
+			else if ((strlen(buff) == 34 && (*(data + i) != '$'))) {
+				memset(buff, '\0', BUFF_LEN);
+				state_ = 0;
+				return;
+
+			}
+
+			else if ((*(data + i) != '$')) {
+				char c = *(data + i);
+				strncat(buff, &c, 1);
+
+			}
+
+
+
+			//else{}
+		}
+
+	}
 
 	else {
 		memset(buff, '\0', BUFF_LEN);
